@@ -24,9 +24,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
     $sth->bindParam(':config_name', $selectthemes, PDO::PARAM_STR);
     $sth->bindParam(':config_value', $config_value, PDO::PARAM_STR, strlen($config_value));
-   // print_R($config_value);die('p');
     $sth->execute();
     $nv_Cache->delMod('settings');
+    $gfonts = new NukeViet\Client\Gfonts();
+    $gfonts->destroyAll();
     nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op . '&selectthemes=' . $selectthemes . '&rand=' . nv_genpass());
 }
 else {

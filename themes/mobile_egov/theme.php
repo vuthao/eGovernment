@@ -152,12 +152,6 @@ function nv_site_theme($contents, $full = true)
     $xtpl->assign('LOGO_WIDTH', $size[0]);
     $xtpl->assign('LOGO_HEIGHT', $size[1]);
 
-    if (isset($size['mime']) and $size['mime'] == 'application/x-shockwave-flash') {
-        $xtpl->parse('main.swf');
-    } else {
-        $xtpl->parse('main.image');
-    }
-
     // Only full theme
     if ($full) {
         // Search form variables
@@ -176,7 +170,9 @@ function nv_site_theme($contents, $full = true)
                 array_unshift($array_mod_title, $arr_cat_title_i);
             }
             if (! empty($array_mod_title)) {
+                $border = 1;
                 foreach ($array_mod_title as $arr_cat_title_i) {
+                    $arr_cat_title_i['position'] = $border++;
                     $xtpl->assign('BREADCRUMBS', $arr_cat_title_i);
                     $xtpl->parse('main.breadcrumbs.loop');
                 }

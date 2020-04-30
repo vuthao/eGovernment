@@ -159,20 +159,10 @@ function nv_site_theme($contents, $full = true)
     $xtpl->assign('LOGO_WIDTH', $size[0]);
     $xtpl->assign('LOGO_HEIGHT', $size[1]);
 
-    if (isset($size['mime']) and $size['mime'] == 'application/x-shockwave-flash') {
-        $xtpl->parse('main.swf');
-    } else {
-        $xtpl->parse('main.image');
-    }
-
     if (!empty($global_config['site_banner']) and file_exists(NV_ROOTDIR . '/' . $global_config['site_banner'])) {
         $size_banner = @getimagesize(NV_ROOTDIR . '/' . $global_config['site_banner']);
         $xtpl->assign('SITE_BANNER', NV_BASE_SITEURL . $global_config['site_banner']);
-        if (isset($size_banner['mime']) and $size_banner['mime'] == 'application/x-shockwave-flash') {
-            $xtpl->parse('main.site_banner_swf');
-        } else {
-            $xtpl->parse('main.site_banner_image');
-        }
+        $xtpl->parse('main.site_banner_image');
     }
 
     if (preg_match("/<h1[^\>]*\>/i", $contents)) {
@@ -204,7 +194,9 @@ function nv_site_theme($contents, $full = true)
                 array_unshift($array_mod_title_copy, $arr_cat_title_i);
             }
             if (! empty($array_mod_title_copy)) {
+                $border = 2;
                 foreach ($array_mod_title_copy as $arr_cat_title_i) {
+                    $arr_cat_title_i['position'] = $border++;
                     $xtpl->assign('BREADCRUMBS', $arr_cat_title_i);
                     $xtpl->parse('main.breadcrumbs.loop');
                 }

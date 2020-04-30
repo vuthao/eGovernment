@@ -151,10 +151,15 @@
             <div class="h5 clearfix">
                 <p id="stringrating">{STRINGRATING}</p>
                 <!-- BEGIN: data_rating -->
-                <span itemscope itemtype="http://data-vocabulary.org/Review-aggregate">{LANG.rating_average}:
-                    <span itemprop="rating" id="numberrating">{DETAIL.numberrating}</span> -
-                    <span itemprop="votes" id="click_rating">{DETAIL.click_rating}</span> {LANG.rating_count}
-                </span>
+					<span itemscope itemtype="https://schema.org/AggregateRating">
+					    <span class="hidden d-none hide" itemprop="itemReviewed" itemscope itemtype="https://schema.org/CreativeWorkSeries">
+					        <span class="hidden d-none hide" itemprop="name">{DETAIL.title}</span>
+					    </span>
+					    {LANG.rating_average}:
+					    <span id="numberrating" itemprop="ratingValue">{DETAIL.numberrating}</span> -
+					    <span id="click_rating" itemprop="ratingCount">{DETAIL.click_rating}</span> {LANG.rating_count}
+					    <span class="hidden d-none hide" itemprop="bestRating">5</span>
+					</span>
                 <!-- END: data_rating -->
                 <div style="padding: 5px;">
                     <input class="hover-star" type="radio" value="1" title="{LANGSTAR.verypoor}" /><input class="hover-star" type="radio" value="2" title="{LANGSTAR.poor}" /><input class="hover-star" type="radio" value="3" title="{LANGSTAR.ok}" /><input class="hover-star" type="radio" value="4" title="{LANGSTAR.good}" /><input class="hover-star" type="radio" value="5" title="{LANGSTAR.verygood}" /><span id="hover-test" style="margin: 0 0 0 20px;">{LANGSTAR.note}</span>
@@ -193,7 +198,6 @@ $(function() {
 	<div class="panel-body">
         <div class="socialicon clearfix margin-bottom-lg">
         	<div class="fb-like" data-href="{SELFURL}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">&nbsp;</div>
-	        <div class="g-plusone" data-size="medium"></div>
 	        <a href="http://twitter.com/share" class="twitter-share-button">Tweet</a>
 	    </div>
      </div>

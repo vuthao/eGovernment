@@ -5,7 +5,7 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
- * @Createdate Mon, 27 Apr 2020 16:27:25 GMT
+ * @Createdate Thu, 30 Apr 2020 01:26:16 GMT
  */
 
 if (!defined('NV_MAINFILE')) {
@@ -15,6 +15,19 @@ if (!defined('NV_MAINFILE')) {
 $sample_base_siteurl = '/';
 $sql_create_table = array();
 
+
+$sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_authors_oauth`";
+$sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_authors_oauth` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) unsigned NOT NULL COMMENT 'ID của quản trị',
+  `oauth_server` varchar(50) NOT NULL COMMENT 'Eg: facebook, google...',
+  `oauth_uid` varchar(50) NOT NULL COMMENT 'ID duy nhất ứng với server',
+  `oauth_email` varchar(50) NOT NULL COMMENT 'Email',
+  `addtime` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_id` (`admin_id`,`oauth_server`,`oauth_uid`),
+  KEY `oauth_email` (`oauth_email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_unicode_ci COMMENT='Bảng lưu xác thực 2 bước từ oauth của admin'";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_banip`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_banip` (
@@ -167,9 +180,9 @@ $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'gzip_method', '1')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'authors_detail_main', '0')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'spadmin_add_admin', '1')";
-$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'timestamp', '1588004814')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'timestamp', '1588209953')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'captcha_type', '1')";
-$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'version', '1.1.08')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'version', '4.4.00')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'cookie_httponly', '1')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'admin_check_pass_time', '1800')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'cookie_secure', '0')";
@@ -218,7 +231,7 @@ $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'autologosize3', '30')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'autologomod', '')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'name_show', '0')";
-$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'cronjobs_next_time', '1588005059')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'cronjobs_next_time', '1588210217')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'disable_site_content', 'Vì lý do kỹ thuật website tạm ngưng hoạt động. Thành thật xin lỗi các bạn vì sự bất tiện này!')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'seotools', 'prcservice', '')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'about', 'auto_postcomm', '1')";
@@ -370,6 +383,19 @@ $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'referer_blocker', '1')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('vi', 'global', 'user_allowed_theme', '')";
 $sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'private_site', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'admin_2step_opt', 'code')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'admin_2step_default', 'code')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'nv_overflow_size', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'sender_name', '')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'sender_email', '')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'reply_name', '')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'reply_email', '')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'force_sender', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'force_reply', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'notify_email_error', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'max_user_admin', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'site', 'max_user_number', '0')";
+$sql_create_table[] = "REPLACE INTO `" . $db_config['prefix'] . "_config` (`lang`, `module`, `config_name`, `config_value`) VALUES ('sys', 'global', 'users_special', '0')";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_cronjobs`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_cronjobs` (
@@ -389,15 +415,15 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_cronjobs` (
   PRIMARY KEY (`id`),
   KEY `is_sys` (`is_sys`)
 ) ENGINE=MyISAM  AUTO_INCREMENT=10  DEFAULT CHARSET=utf8";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (1, 1546504163, 5, 0, 'online_expired_del.php', 'cron_online_expired_del', '', 0, 1, 1, 1588004759, 1, 'Xóa các dòng ghi trạng thái online đã cũ trong CSDL')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (2, 1546504163, 1440, 0, 'dump_autobackup.php', 'cron_dump_autobackup', '', 0, 1, 1, 1588001658, 1, 'Tự động lưu CSDL')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (3, 1546504163, 60, 0, 'temp_download_destroy.php', 'cron_auto_del_temp_download', '', 0, 1, 1, 1588001658, 1, 'Xóa các file tạm trong thư mục tmp')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (4, 1546504163, 30, 0, 'ip_logs_destroy.php', 'cron_del_ip_logs', '', 0, 1, 1, 1588003503, 1, 'Xóa IP log files, Xóa các file nhật ký truy cập')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (5, 1546504163, 1440, 0, 'error_log_destroy.php', 'cron_auto_del_error_log', '', 0, 1, 1, 1588001658, 1, 'Xóa các file error_log quá hạn')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (1, 1546504163, 5, 0, 'online_expired_del.php', 'cron_online_expired_del', '', 0, 1, 1, 1588209917, 1, 'Xóa các dòng ghi trạng thái online đã cũ trong CSDL')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (2, 1546504163, 1440, 0, 'dump_autobackup.php', 'cron_dump_autobackup', '', 0, 1, 1, 1588209457, 1, 'Tự động lưu CSDL')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (3, 1546504163, 60, 0, 'temp_download_destroy.php', 'cron_auto_del_temp_download', '', 0, 1, 1, 1588209457, 1, 'Xóa các file tạm trong thư mục tmp')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (4, 1546504163, 30, 0, 'ip_logs_destroy.php', 'cron_del_ip_logs', '', 0, 1, 1, 1588209457, 1, 'Xóa IP log files, Xóa các file nhật ký truy cập')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (5, 1546504163, 1440, 0, 'error_log_destroy.php', 'cron_auto_del_error_log', '', 0, 1, 1, 1588209457, 1, 'Xóa các file error_log quá hạn')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (6, 1546504163, 360, 0, 'error_log_sendmail.php', 'cron_auto_sendmail_error_log', '', 0, 1, 0, 0, 0, 'Gửi email các thông báo lỗi cho admin')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (7, 1546504163, 60, 0, 'ref_expired_del.php', 'cron_ref_expired_del', '', 0, 1, 1, 1588001658, 1, 'Xóa các referer quá hạn')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (8, 1546504163, 60, 0, 'check_version.php', 'cron_auto_check_version', '', 0, 1, 1, 1588001658, 1, 'Kiểm tra phiên bản NukeViet')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (9, 1546504163, 1440, 0, 'notification_autodel.php', 'cron_notification_autodel', '', 0, 1, 1, 1588001658, 1, 'Xóa thông báo cũ')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (7, 1546504163, 60, 0, 'ref_expired_del.php', 'cron_ref_expired_del', '', 0, 1, 1, 1588209457, 1, 'Xóa các referer quá hạn')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (8, 1546504163, 60, 0, 'check_version.php', 'cron_auto_check_version', '', 0, 1, 1, 1588209457, 1, 'Kiểm tra phiên bản NukeViet')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_cronjobs` (`id`, `start_time`, `inter_val`, `inter_val_type`, `run_file`, `run_func`, `params`, `del`, `is_sys`, `act`, `last_time`, `last_result`, `vi_cron_name`) VALUES (9, 1546504163, 1440, 0, 'notification_autodel.php', 'cron_notification_autodel', '', 0, 1, 1, 1588209457, 1, 'Xóa thông báo cũ')";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_extension_files`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_extension_files` (
@@ -414,8 +440,8 @@ $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_ips`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_ips` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `type` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(32) DEFAULT NULL,
-  `mask` tinyint(4) NOT NULL DEFAULT '0',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `mask` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `area` tinyint(3) NOT NULL,
   `begintime` int(11) DEFAULT NULL,
   `endtime` int(11) DEFAULT NULL,
@@ -451,7 +477,9 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_language_file`
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_notification`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_notification` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `send_to` mediumint(8) unsigned NOT NULL,
+  `admin_view_allowed` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Cấp quản trị được xem: 0,1,2',
+  `logic_mode` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0: Cấp trên xem được cấp dưới, 1: chỉ cấp hoặc người được chỉ định',
+  `send_to` varchar(250) NOT NULL DEFAULT '' COMMENT 'danh sách id người nhận, phân cách bởi dấu phảy',
   `send_from` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `area` tinyint(1) unsigned NOT NULL,
   `language` char(3) NOT NULL,
@@ -461,7 +489,10 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_notification` 
   `content` text NOT NULL,
   `add_time` int(11) unsigned NOT NULL,
   `view` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `send_to` (`send_to`),
+  KEY `admin_view_allowed` (`admin_view_allowed`),
+  KEY `logic_mode` (`logic_mode`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_plugin`";
@@ -493,26 +524,26 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_setup_extensio
   KEY `id` (`id`),
   KEY `type` (`type`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'siteterms', 0, 0, 'page', 'siteterms', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (19, 'module', 'banners', 1, 0, 'banners', 'banners', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (20, 'module', 'contact', 0, 1, 'contact', 'contact', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (1, 'module', 'news', 0, 1, 'news', 'news', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (21, 'module', 'voting', 0, 0, 'voting', 'voting', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'siteterms', 0, 0, 'page', 'siteterms', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (19, 'module', 'banners', 1, 0, 'banners', 'banners', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (20, 'module', 'contact', 0, 1, 'contact', 'contact', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (1, 'module', 'news', 0, 1, 'news', 'news', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (21, 'module', 'voting', 0, 0, 'voting', 'voting', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (28, 'module', 'faq', 0, 1, 'faq', 'faq', '4.3.04 1546504163', 1498555548, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (284, 'module', 'seek', 1, 0, 'seek', 'seek', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (24, 'module', 'users', 1, 1, 'users', 'users', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (27, 'module', 'statistics', 0, 0, 'statistics', 'statistics', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (29, 'module', 'menu', 0, 0, 'menu', 'menu', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (283, 'module', 'feeds', 1, 0, 'feeds', 'feeds', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (282, 'module', 'page', 1, 1, 'page', 'page', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (281, 'module', 'comment', 1, 0, 'comment', 'comment', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (312, 'module', 'freecontent', 0, 1, 'freecontent', 'freecontent', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (327, 'module', 'two-step-verification', 1, 0, 'two-step-verification', 'two_step_verification', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (307, 'theme', 'default', 0, 0, 'default', 'default', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (311, 'theme', 'mobile_default', 0, 0, 'mobile_default', 'mobile_default', '4.3.08 1577523600', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (284, 'module', 'seek', 1, 0, 'seek', 'seek', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (24, 'module', 'users', 1, 1, 'users', 'users', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (27, 'module', 'statistics', 0, 0, 'statistics', 'statistics', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (29, 'module', 'menu', 0, 0, 'menu', 'menu', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (283, 'module', 'feeds', 1, 0, 'feeds', 'feeds', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (282, 'module', 'page', 1, 1, 'page', 'page', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (281, 'module', 'comment', 1, 0, 'comment', 'comment', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (312, 'module', 'freecontent', 0, 1, 'freecontent', 'freecontent', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (327, 'module', 'two-step-verification', 1, 0, 'two-step-verification', 'two_step_verification', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (307, 'theme', 'default', 0, 0, 'default', 'default', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (311, 'theme', 'mobile_default', 0, 0, 'mobile_default', 'mobile_default', '4.4.00 1588150800', 1546504163, 'VINADES (contact@vinades.vn)', '')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (254, 'module', 'laws', 0, 1, 'laws', 'laws', '4.3.04 1546504163', 1498555548, 'VINADES (contact@vinades.vn)', 'Modules văn bản pháp luật')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (391, 'theme', 'egov', 0, 0, 'egov', 'egov', '4.3.04 1546504163', 1510912800, 'VINADES (contact@vinades.vn)', 'egov')";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'about', 0, 0, 'page', 'about', '4.3.08 1577523600', 1500862887, '', '')";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'about', 0, 0, 'page', 'about', '4.4.00 1588150800', 1500862887, '', '')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (374, 'module', 'organs', 0, 1, 'organs', 'organs', '4.3.04 1546504163', 1506565060, 'VINADES (contact@vinades.vn)', '')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'co-cau-to-chuc', 0, 0, 'organs', 'co_cau_to_chuc', '4.3.04 1546504163', 1506565068, '', '')";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_setup_extensions` (`id`, `type`, `title`, `is_sys`, `is_virtual`, `basename`, `table_prefix`, `version`, `addtime`, `author`, `note`) VALUES (0, 'module', 'opinions', 0, 0, 'laws', 'opinions', '4.3.04 1546504163', 1506570465, '', '')";
@@ -3697,7 +3728,7 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_comment` (
   `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `post_name` varchar(100) NOT NULL,
   `post_email` varchar(100) NOT NULL,
-  `post_ip` varchar(15) NOT NULL,
+  `post_ip` varchar(39) NOT NULL DEFAULT '',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `likes` mediumint(9) NOT NULL DEFAULT '0',
   `dislikes` mediumint(9) NOT NULL DEFAULT '0',
@@ -3754,7 +3785,7 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_contact_sen
   `sender_address` varchar(250) NOT NULL,
   `sender_email` varchar(100) NOT NULL,
   `sender_phone` varchar(20) DEFAULT '',
-  `sender_ip` varchar(15) NOT NULL,
+  `sender_ip` varchar(39) NOT NULL DEFAULT '',
   `is_read` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_reply` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -5041,7 +5072,7 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_news_7` (
   KEY `instant_active` (`instant_active`),
   KEY `instant_creatauto` (`instant_creatauto`)
 ) ENGINE=MyISAM  AUTO_INCREMENT=11  DEFAULT CHARSET=utf8";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_7` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (10, 7, '7', 0, 1, 'Chinhphu.vn', 1, 1502358714, 1510804474, 1, 11, 1499680260, 0, 2, 'Thời gian đánh giá hồ sơ dự thầu theo nghị định hay thông tư?', 'thoi-gian-danh-gia-ho-so-du-thau-theo-nghi-dinh-hay-thong-tu', 'Trường hợp gói thầu có quy mô nhỏ thì thời gian đánh giá hồ sơ dự thầu tối đa là 25 ngày, kể từ ngày mở thầu đến khi bên mời thầu có tờ trình đề nghị phê duyệt kết quả lựa chọn nhà thầu.', '', '', 0, 1, '4', 1, 0, 4, 0, 0, 0, 0, '', 0)";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_7` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (10, 7, '7', 0, 1, 'Chinhphu.vn', 1, 1502358714, 1510804474, 1, 11, 1499680260, 0, 2, 'Thời gian đánh giá hồ sơ dự thầu theo nghị định hay thông tư?', 'thoi-gian-danh-gia-ho-so-du-thau-theo-nghi-dinh-hay-thong-tu', 'Trường hợp gói thầu có quy mô nhỏ thì thời gian đánh giá hồ sơ dự thầu tối đa là 25 ngày, kể từ ngày mở thầu đến khi bên mời thầu có tờ trình đề nghị phê duyệt kết quả lựa chọn nhà thầu.', '', '', 0, 1, '4', 1, 0, 5, 0, 0, 0, 0, '', 0)";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_vi_news_8`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_news_8` (
@@ -5342,7 +5373,7 @@ $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (7, 4, '4', 0, 1, 'Thành Đạt', 1, 1502358418, 1502444898, 1, 5, 1491644700, 0, 2, 'Cách mạng 4.0 và bàn tay Chính phủ', 'cach-mang-4-0-va-ban-tay-chinh-phu', '“Để bắt kịp cách mạng công nghiệp lần thứ 4 cần phải có bàn tay mạnh mẽ từ Chính phủ”, quan điểm được nhiều chuyên gia đưa ra tại diễn đàn &quot;Cuộc cách mạng công nghiệp 4.0 - Được và mất&quot; vừa được tổ chức chiều 7/4.', '2017_08/cach-mang-4.0.jpg', 'Diễn đàn &quot;Cuộc cách mạng công nghiệp 4.0 - Được và mất&quot;', 1, 1, '4', 1, 0, 0, 0, 0, 0, 0, '', 0)";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (8, 5, '5', 0, 1, 'Minh Hiển', 1, 1502358510, 1502444892, 1, 6, 1493977620, 0, 2, 'Thủ tướng chỉ thị tăng cường năng lực tiếp cận cuộc Cách mạng CN lần thứ 4', 'thu-tuong-chi-thi-tang-cuong-nang-luc-tiep-can-cuoc-cach-mang-cn-lan-thu-4', 'Thủ tướng Chính phủ Nguyễn Xuân Phúc vừa ký Chỉ thị 16/CT-TTg về việc tăng cường năng lực tiếp cận cuộc Cách mạng công nghiệp lần thứ 4', '2017_08/cntt.jpg', 'Ảnh minh họa', 1, 1, '4', 1, 0, 1, 0, 0, 0, 0, '', 0)";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (9, 6, '3,4,6', 0, 1, 'Hà Chính', 1, 1502358576, 1502802497, 1, 10, 1497606480, 0, 2, 'Hậu TPP&#x3A; Việt Nam có tới 6 kế hoạch phòng xa', 'hau-tpp-viet-nam-co-toi-6-ke-hoach-phong-xa', 'Theo các nhà quan sát nước ngoài, “Việt Nam đã khôn khoan không bỏ hết trứng vào giỏ TPP” và Việt Nam không chỉ có “kế hoạch B” mà còn có cả kế hoạch C, D, E, F và G sau khi Hoa Kỳ rút khỏi Hiệp định này.', '', '', 0, 1, '4', 1, 0, 8, 0, 0, 0, 0, '', 0)";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (10, 7, '7', 0, 1, 'Chinhphu.vn', 1, 1502358714, 1510804474, 1, 11, 1499680260, 0, 2, 'Thời gian đánh giá hồ sơ dự thầu theo nghị định hay thông tư?', 'thoi-gian-danh-gia-ho-so-du-thau-theo-nghi-dinh-hay-thong-tu', 'Trường hợp gói thầu có quy mô nhỏ thì thời gian đánh giá hồ sơ dự thầu tối đa là 25 ngày, kể từ ngày mở thầu đến khi bên mời thầu có tờ trình đề nghị phê duyệt kết quả lựa chọn nhà thầu.', '', '', 0, 1, '4', 1, 0, 4, 0, 0, 0, 0, '', 0)";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (10, 7, '7', 0, 1, 'Chinhphu.vn', 1, 1502358714, 1510804474, 1, 11, 1499680260, 0, 2, 'Thời gian đánh giá hồ sơ dự thầu theo nghị định hay thông tư?', 'thoi-gian-danh-gia-ho-so-du-thau-theo-nghi-dinh-hay-thong-tu', 'Trường hợp gói thầu có quy mô nhỏ thì thời gian đánh giá hồ sơ dự thầu tối đa là 25 ngày, kể từ ngày mở thầu đến khi bên mời thầu có tờ trình đề nghị phê duyệt kết quả lựa chọn nhà thầu.', '', '', 0, 1, '4', 1, 0, 5, 0, 0, 0, 0, '', 0)";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (11, 8, '8', 0, 1, 'MK', 1, 1502358784, 1502358784, 1, 2, 1481449920, 0, 2, 'Tuyên dương 34 công trình sáng tạo trẻ', 'tuyen-duong-34-cong-trinh-sang-tao-tre', 'Tối 10/12, tại thành phố Vĩnh Yên, tỉnh Vĩnh Phúc, Trung ương Đoàn Thanh niên Cộng sản Hồ Chí Minh tổ chức tuyên dương và trao giải cho 34 công trình, đề tài, giải pháp sáng tạo trẻ năm 2016.', '2017_08/sang-tao-tre.jpg', 'Ảnh Dân trí', 1, 1, '4', 1, 0, 1, 0, 0, 0, 0, '', 0)";
 $sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_news_rows` (`id`, `catid`, `listcatid`, `topicid`, `admin_id`, `author`, `sourceid`, `addtime`, `edittime`, `status`, `weight`, `publtime`, `exptime`, `archive`, `title`, `alias`, `hometext`, `homeimgfile`, `homeimgalt`, `homeimgthumb`, `inhome`, `allowed_comm`, `allowed_rating`, `external_link`, `hitstotal`, `hitscm`, `total_rating`, `click_rating`, `instant_active`, `instant_template`, `instant_creatauto`) VALUES (12, 3, '3', 0, 1, '', 3, 1510831228, 1510831964, 1, 12, 1510830840, 0, 2, 'NukeViet bất ngờ tung ra phiên bản phần mềm Cổng thông tin cho cơ quan nhà nước', 'nukeviet-bat-ngo-tung-ra-phien-ban-phan-mem-cong-thong-tin-cho-co-quan-nha-nuoc', 'Mới ra mắt phiên bản NukeViet CMS 4.3 chưa lâu, phần mềm nguồn mở “made in Vietnam” NukeViet vừa bất ngờ tung ra phiên bản phần mềm Cổng thông tin dành riêng cho cơ quan nhà nước có tên gọi là NukeViet eGovernment.', 'nukeviet-egovernment.jpg', 'Ảnh chụp giao diện NukeViet Egovernment 1.0', 1, 1, '4', 1, 0, 3, 0, 0, 0, 0, '', 0)";
 
@@ -5615,7 +5646,7 @@ $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_page` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=MyISAM  AUTO_INCREMENT=6  DEFAULT CHARSET=utf8";
-$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_page` (`id`, `title`, `alias`, `image`, `imagealt`, `imageposition`, `description`, `bodytext`, `keywords`, `socialbutton`, `activecomm`, `layout_func`, `weight`, `admin_id`, `add_time`, `edit_time`, `status`, `hitstotal`, `hot_post`) VALUES (5, 'Thông báo', 'thong-bao', '', '', 0, '', '<strong>Chỉ dẫn cho người quản trị website:</strong><br  /> <br  /> Các liên kết đến bài viết này có nghĩa là menu bạn vừa truy cập là mục cần phải có cho website của các cơ quan nhà nước (căn cứ theo các quy định hiện hành về website/ cổng thông tin).<br  /> <br  /> Với NukeViet eGovernment bạn có nhiều cách để hoàn hiện các hạng mục này, bằng cách sử dụng các chức năng có sẵn trên phiên bản NukeViet eGovernment mặc định hoặc cài thêm các module có trên <a href=\"https://nukeviet.vn/vi/store/\">NukeViet Store</a><br  /> <br  /> Để có thể tìm kiếm và cài đặt các module liên quan tới NukeViet eGovernment, bạn có thể truy cập địa chỉ: <a href=\"https://nukeviet.vn/vi/store/egovernment/\" target=\"_blank\">https://nukeviet.vn/vi/store/egovernment/</a>', '', 1, '4', '', 1, 1, 1502769405, 1510830086, 1, 18, 0)";
+$sql_create_table[] = "INSERT INTO `" . $db_config['prefix'] . "_vi_page` (`id`, `title`, `alias`, `image`, `imagealt`, `imageposition`, `description`, `bodytext`, `keywords`, `socialbutton`, `activecomm`, `layout_func`, `weight`, `admin_id`, `add_time`, `edit_time`, `status`, `hitstotal`, `hot_post`) VALUES (5, 'Thông báo', 'thong-bao', '', '', 0, '', '<strong>Chỉ dẫn cho người quản trị website:</strong><br  /> <br  /> Các liên kết đến bài viết này có nghĩa là menu bạn vừa truy cập là mục cần phải có cho website của các cơ quan nhà nước (căn cứ theo các quy định hiện hành về website/ cổng thông tin).<br  /> <br  /> Với NukeViet eGovernment bạn có nhiều cách để hoàn hiện các hạng mục này, bằng cách sử dụng các chức năng có sẵn trên phiên bản NukeViet eGovernment mặc định hoặc cài thêm các module có trên <a href=\"https://nukeviet.vn/vi/store/\">NukeViet Store</a><br  /> <br  /> Để có thể tìm kiếm và cài đặt các module liên quan tới NukeViet eGovernment, bạn có thể truy cập địa chỉ: <a href=\"https://nukeviet.vn/vi/store/egovernment/\" target=\"_blank\">https://nukeviet.vn/vi/store/egovernment/</a>', '', 1, '4', '', 1, 1, 1502769405, 1510830086, 1, 19, 0)";
 
 $sql_create_table[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_vi_page_config`";
 $sql_create_table[] = "CREATE TABLE `" . $db_config['prefix'] . "_vi_page_config` (

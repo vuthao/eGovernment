@@ -175,6 +175,7 @@ $lang_module['group_type_2'] = 'Nhóm tham gia tự do';
 $lang_module['group_color'] = 'Màu nhóm';
 $lang_module['group_avatar'] = 'Ảnh đại diện nhóm';
 $lang_module['group_is_default'] = 'Nhóm mặc định khi đăng ký thành viên vào';
+$lang_module['group_del_inactive'] = 'Xóa các nhóm ngưng hiệu lực';
 $lang_module['siteus'] = 'Cho phép các subsite thêm tài khoản vào nhóm';
 $lang_module['users'] = 'Thành viên';
 $lang_module['promote'] = 'Thăng cấp';
@@ -487,6 +488,7 @@ $lang_module['two_step_verification_require_site'] = 'Bắt buộc xác thực h
 $lang_module['two_step_verification_require_admindefault'] = 'Thiết lập an ninh đang yêu cầu bật tại khu vực quản trị, dù không bật ở đây quản trị vẫn phải kích hoạt xác thực hai bước mới đăng nhập được';
 $lang_module['two_step_verification_require_sitedefault'] = 'Thiết lập an ninh đang yêu cầu bật ngoài site, dù không bật ở đây thành viên trong nhóm vẫn phải kích hoạt xác thực hai bước mới đăng nhập được';
 $lang_module['notification_new_acount'] = 'Tài khoản %s đang đợi kích hoạt';
+$lang_module['notification_sendactive_fail'] = 'Tài khoản %s đang đợi kích hoạt do hệ thống không thể gửi email';
 $lang_module['editcensor'] = 'Kiểm duyệt thông tin';
 $lang_module['editcensor_lastedit'] = 'Sửa lần cuối';
 $lang_module['editcensor_confirm_approval'] = 'Bạn có chắc chắn xác nhận duyệt? Sau khi duyệt thông tin này sẽ ghi đè thông tin hiện tại của thành viên';
@@ -505,6 +507,8 @@ $lang_module['active_obj_1'] = 'Hệ thống tự kích hoạt';
 $lang_module['active_obj_2'] = 'Kích hoạt qua email';
 $lang_module['active_obj_3'] = 'Kích hoạt qua Oauth %s';
 $lang_module['active_obj_4'] = 'Quản trị <strong title="%s">%s</strong> kích hoạt';
+$lang_module['is_email_verified'] = 'Xác minh email';
+$lang_module['is_email_verified1'] = 'Nếu chọn vào đây, trạng thái email của tài khoản là không cần xác minh. Nếu không, trạng thái email tài khoản là chưa xác minh';
 
 $lang_module['account_active'] = 'Thông tin kích hoạt tài khoản';
 $lang_module['account_active_info'] = 'Xin chào %1$s,<br /><br />Tài khoản của bạn tại website %2$s đang chờ kích hoạt. Để kích hoạt, bạn hãy click vào link dưới đây:<br /><br />URL: <a href="%3$s">%3$s</a><br /><br />Các thông tin cần thiết:<br /><br />Tài khoản: %4$s<br />Email: %5$s<br /><br />Việc kích hoạt tài khoản chỉ có hiệu lực đến %6$s<br /><br />Đây là thư tự động được gửi đến hòm thư điện tử của bạn từ website %2$s. Nếu bạn không hiểu gì về nội dung bức thư này, đơn giản hãy xóa nó đi.<br /><br /><br /><br />Quản trị site';

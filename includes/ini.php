@@ -24,7 +24,7 @@ $config_ini_file = NV_ROOTDIR . '/' . NV_DATADIR . '/config_ini.' . preg_replace
 if ($iniSaveTime + 86400 < NV_CURRENTTIME) {
     $content_config = "<?php" . "\n\n";
     $content_config .= NV_FILEHEAD . "\n\n";
-    $content_config .= "if (!defined('NV_MAINFILE'))\n    die('Stop!!!');\n\n";
+    $content_config .= "if (!defined('NV_MAINFILE')) {\n    die('Stop!!!');\n}\n\n";
 
     //disable_classes
     $sys_info['disable_classes'] = (($disable_classes = ini_get('disable_classes')) != '' and $disable_classes != false) ? array_map('trim', preg_split("/[\s,]+/", $disable_classes)) : [];
@@ -143,13 +143,23 @@ if ($iniSaveTime + 86400 < NV_CURRENTTIME) {
     }
     $content_config .= "\$sys_info['php_compress_methods'] = [" . $_compress_method . "];\n";
 
-    //server_headers
-    stream_context_set_default(array(
-        'http' => array(
-            'method' => "GET",
-            'header' => "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate, br\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0\r\n"
-        )
-    ));
+    // server_headers
+    if ((isset($_SERVER['HTTPS']) and (strtolower($_SERVER['HTTPS']) == 'on' or $_SERVER['HTTPS'] == '1')) or $_SERVER['SERVER_PORT'] == 443) {
+        stream_context_set_default([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false
+            ]
+        ]);
+    } else {
+        stream_context_set_default([
+            'http' => [
+                'method' => "GET",
+                'header' => "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate, br\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0\r\n"
+            ]
+        ]);
+    }
+
     $server_headers = get_headers(NV_MY_DOMAIN . NV_BASE_SITEURL . 'index.php?response_headers_detect=1', 1);
     unset($server_headers[0], $server_headers['Date'], $server_headers['Expires'], $server_headers['Last-Modified'], $server_headers['Connection'], $server_headers['Set-Cookie'], $server_headers['X-Page-Speed']);
     $sys_info['server_headers'] = [];
@@ -161,6 +171,14 @@ if ($iniSaveTime + 86400 < NV_CURRENTTIME) {
     }
     $_temp = implode(",", $_temp);
     $content_config .= "\$sys_info['server_headers'] = [" . $_temp . "];\n";
+
+    // Kiểm tra PHP hỗ trợ xử lý IPv6
+    if (!((extension_loaded('sockets') and defined('AF_INET6')) or @inet_pton('::1'))) {
+        $sys_info['ip6_support'] = false;
+    } else {
+        $sys_info['ip6_support'] = true;
+    }
+    $content_config .= "\$sys_info['ip6_support'] = " . ($sys_info['ip6_support'] ? 'true' : 'false') . ";\n";
 
     if ($sys_info['ini_set_support']) {
         ini_set('display_startup_errors', 0);

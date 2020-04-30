@@ -94,7 +94,7 @@ require NV_ROOTDIR . '/vendor/autoload.php';
 require NV_ROOTDIR . '/includes/xtemplate.class.php';
 
 // Xac dinh IP cua client
-$ips = new NukeViet\Core\Ips();
+$ips = new NukeViet\Core\Ips($sys_info);
 // define( 'NV_SERVER_IP', $ips->server_ip );
 define('NV_FORWARD_IP', $ips->forward_ip);
 define('NV_REMOTE_ADDR', $ips->remote_addr);
@@ -329,6 +329,8 @@ if ($global_config['is_user_forum']) {
 if (!empty($global_config['openid_servers'])) {
     $global_config['openid_servers'] = explode(',', $global_config['openid_servers']);
     define('NV_OPENID_ALLOWED', true);
+} else {
+    $global_config['openid_servers'] = [];
 }
 
 if (empty($global_config['site_logo'])) {

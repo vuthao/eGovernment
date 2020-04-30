@@ -10,6 +10,7 @@
 /data/logs/*
 /data/config/efloodip.php
 /data/config/banip.php
+/data/config/admin_config.php
 /data/logs/data_logs/
 /data/logs/error_logs/
 /data/logs/ip_logs/

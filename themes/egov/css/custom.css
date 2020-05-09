@@ -249,10 +249,21 @@ ul.menutop, ul.menutop a, .socialList li a, .user-fix>span>.user, .user-fix>span
 
 .banner {
     position: absolute;
+    left: 0;
+    top: 30px;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
 }
 
 .banner img {
-    width: 100%
+    object-position: center;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+    min-height: 150px;
 }
 
 .sitebannertext .sd {
@@ -384,11 +395,11 @@ ul.menutop, ul.menutop a, .socialList li a, .user-fix>span>.user, .user-fix>span
     background-image: url(../images/menu-right.png);
 }
 
-#menu-site-default ul.allowrwap .dropdown-menu > li > a {
+#menu-site-default ul.allowrwap .dropdown-menu>li>a {
     white-space: normal;
 }
 
-#menu-site-default ul.ellipsissub .dropdown-menu > li > a{
+#menu-site-default ul.ellipsissub .dropdown-menu>li>a {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

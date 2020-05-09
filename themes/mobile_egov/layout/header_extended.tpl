@@ -16,37 +16,36 @@
             </div>
             <div class="site-name-gov">
                 [TEXT_BANNER]
-            	<h1 class="hidden">{SITE_NAME}</h1>
+                <h1 class="hidden">{SITE_NAME}</h1>
                 <h2 class="hidden">{SITE_DESCRIPTION}</h2>
             </div>
             <div class="logo">
                 <a title="{SITE_NAME} - {SITE_DESCRIPTION}" href="{THEME_SITE_HREF}"><img src="{LOGO_SRC}" width="{LOGO_WIDTH}" height="{LOGO_HEIGHT}" alt="{SITE_NAME}" /></a>
             </div>
-		</div>
-	</header>
+        </div>
+    </header>
     <div class="tip">
         <div id="tip" data-content=""></div>
     </div>
     <div class="wrap">
-    	<section>
-    		<div id="body">
+        <section>
+            <div id="body">
                <div class="row bottomheader">
-    	           <div class="col-xs-16">
+                   <div class="col-xs-16">
                         <!-- BEGIN: breadcrumbs -->
-             		   <div class="breadcrumbs clearfix">
-             		    	<div class="breadcrumbs-bg">
-             		   			<span class="home-icon" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="{THEME_SITE_HREF}" itemprop="item" title="{LANG.Home}"><span itemprop="name"><em class="fa fa-home fa-lg"></em></span></a></span>
-            	    			<a class="toggle" onclick="showSubBreadcrumbs(this,event);"><em class="fa fa-angle-right"></em></a>
-        						<ol class="breadcrumb"></ol>
-        					</div>
-            			</div>
-        	    		<ol class="sub-breadcrumbs"></ol>
-        	    		<ol class="temp-breadcrumbs hidden">
-            	    		<!-- BEGIN: loop -->
-            	    			<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="{BREADCRUMBS.link}" itemprop="item" title="{BREADCRUMBS.title}"><span itemprop="name">{BREADCRUMBS.title}</span></a><i class="hidden" itemprop="position" content="{BREADCRUMBS.position}"></i></li>
-            	    		<!-- END: loop -->
-        				</ol>
-            			<!-- END: breadcrumbs -->
+                        <div class="breadcrumbs clearfix">
+                             <div class="breadcrumbs-bg">
+                                <span class="home-icon"><a href="{THEME_SITE_HREF}" title="{LANG.Home}"><span><em class="fa fa-home fa-lg"></em></span></a></span>
+                                <!--span class="load-bar"></span-->
+                                <a class="toggle" onclick="showSubBreadcrumbs(this,event);"><em class="fa fa-angle-right"></em></a>
+                                <ol class="breadcrumb"></ol>
+                            </div>
+                        </div>
+                        <ol class="sub-breadcrumbs"></ol>
+                        <ol class="temp-breadcrumbs hidden" itemscope itemtype="https://schema.org/BreadcrumbList">
+                            <!-- BEGIN: loop --><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="{BREADCRUMBS.link}" itemprop="item" title="{BREADCRUMBS.title}"><span itemprop="name">{BREADCRUMBS.title}</span></a><i class="hidden" itemprop="position" content="{BREADCRUMBS.position}"></i></li><!-- END: loop -->
+                        </ol>
+                        <!-- END: breadcrumbs -->
                     </div>
                     <div class="col-xs-8">
                         <div class="headerSearchs">
@@ -56,4 +55,4 @@
                         </div>
                     </div>
                 </div>
-    			[THEME_ERROR_INFO]
+                [THEME_ERROR_INFO]

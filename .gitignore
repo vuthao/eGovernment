@@ -1,6 +1,5 @@
 # Base ignore
 /.project
-<<<<<<< HEAD
 /.buildpath
 /.settings
 /config.php
@@ -16,41 +15,12 @@
 /data/logs/ip_logs/
 /data/logs/ref_logs/
 /data/logs/voting_logs/
-<<<<<<< HEAD
 /data/tmp/
-=======
-/data/tmp/*
 /uploads/logo_*
 /assets/logo_*
 /install/default.php
->>>>>>> 4.3.08
-=======
-/.htaccess
-/.gitattributes
-/.github
-/composer.json
-/config.php
-/CHANGELOG.txt
-/COPYRIGHT.txt
-/CONTRIBUTING.md
-/README.md
-/favicon.ico
-/index.php
-/LICENSE.txt
-/robots.php
-/robots.txt
-/web.config
-/admin/
-/assets/
-/data/
-/includes/
-/install/
-/uploads/
-/vendor/
-/error.php
->>>>>>> faq/develop
+/wiki/
 
-<<<<<<< HEAD
 composer.lock
 #vendor test ignore 
 /vendor/**/demo/
@@ -83,45 +53,3 @@ composer.lock
 /vendor/**/phpunit.php
 /vendor/**/.gitignore
 /vendor/**/composer.*
-=======
-# Ignore fix module files and directories.
-/modules/*
-!/modules/laws
-!/modules/laws/*
-/themes/*
-<<<<<<< HEAD
-!/themes/admin_default/css/laws.css
-!/themes/admin_default/js/laws.js
-!/themes/admin_default/js/laws_*.js
-!/themes/admin_default/images/laws
-!/themes/admin_default/images/laws/*
-!/themes/admin_default/modules/laws
-!/themes/admin_default/modules/laws/*
-!/themes/default/css/laws.css
-!/themes/default/js/laws.js
-!/themes/default/js/laws_*.js
-!/themes/default/images/laws
-!/themes/default/images/laws/*
-!/themes/default/modules/laws
-!/themes/default/modules/laws/*
-/vendor/
-/.gitattributes
-/composer.json
-/error.php
-/.github
->>>>>>> laws/master
-=======
-!/themes/admin_default/css/faq.css
-!/themes/admin_default/js/faq.js
-!/themes/admin_default/images/faq
-!/themes/admin_default/images/faq/*
-!/themes/admin_default/modules/faq
-!/themes/admin_default/modules/faq/*
-!/themes/default/css/faq.css
-!/themes/default/js/faq.js
-!/themes/default/images/faq
-!/themes/default/images/faq/*
-!/themes/default/modules/faq
-!/themes/default/modules/faq/*
-/.buildpath
->>>>>>> faq/develop
